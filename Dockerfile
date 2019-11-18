@@ -33,7 +33,7 @@ RUN groupadd -r terraform && \
 
 
 # Copy Scripts
-COPY bin ${TFCLI_HOME}/bin/
+#COPY bin ${TFCLI_HOME}/bin/
 COPY ReadMe.md ${TFCLI_HOME}/
 
 
