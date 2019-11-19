@@ -10,12 +10,16 @@ curl -o docker/pc-tfcli/tf.sh https://raw.githubusercontent.com/HuskyProcore/sre
 cd docker
 
 # Add the newly created directory to your environment variables
-echo export DOCKER_VOLUMES=$(pwd) >> ~/.bashrc
-echo export SRE_TOOLING=~/sre-tooling >> ~/.bashrc
-echo PATH=$PATH:$SRE_TOOLING/bin >> ~/.bashrc
-export DOCKER_VOLUMES=$(pwd)
-export SRE_TOOLING=~/sre-tooling
-#source ~/.zshrc
+if [[ -z $SRE_TOOLING ]]; then
+  export SRE_TOOLING=~/sre-tooling
+  echo export SRE_TOOLING=~/sre-tooling >> ~/.zshrc
+  echo PATH=$PATH:$SRE_TOOLING/bin >> ~/.zshrc
+fi
+
+if [[ -z $DOCKER_VOLUMES ]]; then
+  export DOCKER_VOLUMES=$(pwd)
+  echo export DOCKER_VOLUMES=$(pwd) >> ~/.zshrc
+fi
 
 # Create a directory for SRE binaries
 cd ~
