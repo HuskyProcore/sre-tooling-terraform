@@ -13,7 +13,7 @@ RUN apt-get update && \
     echo 'y' | apt install ruby && \
     gem install terraform_landscape && \
     echo 'y' | apt install git && \
-    echo 'y' | apt install openssh
+    echo 'y' | apt install openssh-client
 
 # Configuration Variables
 ENV TFCLI_INSTALL /opt/tfcli/tfcli-bundle/install
