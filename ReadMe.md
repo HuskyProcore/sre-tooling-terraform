@@ -64,7 +64,7 @@ The container can be started using the `tf` shell script which will do the follo
 
 Other terraform binaries are also available under `/opt/tfcli/bin` and can be used by
    - `tf<major version>` example `tf11`
-   
+
 
 Type the following command to launch an tfcli container
 ```
@@ -73,12 +73,6 @@ Type the following command to launch an tfcli container
 Type `exit` to quit the container
 
 ## Configuration Scripts
-
-### Installing Terraform versions
-Setting username on default template `.okta-tf` file
-```
-  set_username <your OKTA username>
-```
 
 ## Built With
 
