@@ -7,7 +7,7 @@ versions='0.12.16 0.11.14 0.10.8 0.9.11 0.8.8'
 for version in $versions; do
        destdir="$TFCLI_INSTALL/${version}"
         binary="$TFCLI_INSTALL/${version}/terraform"
-       symlink="$TFCLI_HOME/bin/tf${version:2:2}"
+       symlink="$TFCLI_HOME/bin/tf$(echo $version | cut -d. -f2)"
   release_site="https://releases.hashicorp.com/terraform/${version}/"
   release_file="terraform_${version}_linux_amd64.zip"
   if [ -e "$binary" ]
