@@ -1,27 +1,24 @@
 FROM debian:bullseye-slim
 LABEL maintainer="anuj.rohatgi@procore.com"
 
-#ARGs
-ARG VERSION
-
 USER root
 
 # Update OS
 RUN apt-get update && \
     echo 'y' | apt install sudo && \
     echo 'y' | apt-get install vim && \
-    echo 'y' | apt-get install curl && \
+    echo 'y' | apt-get install wget && \
     echo 'y' | apt-get install unzip && \
-    echo 'y' | apt-get install jq
+    echo 'y' | apt-get install jq && \
+    echo 'y' | apt install ruby
 
 # Configuration Variables
 ENV TFCLI_INSTALL /opt/tfcli/tfcli-bundle/install
 ENV TFCLI_HOME /opt/tfcli
-#AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN
-
 
 # Create Directories
-RUN mkdir -p /opt/tfcli/bin && \
+RUN mkdir -p /opt/tfcli/mount && \
+    mkdir -p /opt/tfcli/bin && \
     mkdir -p /opt/tfcli/tfcli-bundle/install
 
 
@@ -33,31 +30,28 @@ RUN groupadd -r terraform && \
 
 
 # Copy Scripts
-#COPY bin ${TFCLI_HOME}/bin/
+COPY install_terraform ${TFCLI_HOME}/bin/
 COPY ReadMe.md ${TFCLI_HOME}/
-
+RUN chmod +x "${TFCLI_HOME}"/bin/install_terraform
 
 # Set permissions
 RUN chown -R tfcli:terraform "${TFCLI_HOME}"
 
-
 # Download and install Terraform CLI build files
 USER tfcli
-WORKDIR /opt/tfcli/tfcli-bundle/install
-ENV VERSION=$VERSION
-RUN echo $VERSION
-RUN curl "https://releases.hashicorp.com/terraform/$VERSION/terraform_${VERSION}_linux_amd64.zip" -o "tfcli-bundle-$VERSION.zip" && \
-    unzip "tfcli-bundle-$VERSION.zip" && \
-    mv terraform ${TFCLI_HOME}/bin
+RUN ${TFCLI_HOME}/bin/install_terraform
+RUN rm ${TFCLI_HOME}/.wget-hsts
 
 RUN chmod +x "${TFCLI_HOME}"/bin/*
 ENV PATH="${TFCLI_HOME}/bin:${PATH}"
+RUN echo 'alias terraform="tf12"' > ~/.bashrc
 
+# Install Landscape
+USER root
+RUN gem install terraform_landscape
 
 WORKDIR /opt/tfcli
-#VOLUME []
-
-RUN echo 'alias terraform="terraform --profile $SOURCE_PROFILE"' > ~/.bashrc
+VOLUME ["/opt/tfcli/mount"]
 
 ENTRYPOINT ["/bin/bash"]
 CMD []
