@@ -20,17 +20,6 @@ Docker Desktop
   https://www.docker.com/products/docker-desktop
 ```
 
-
-OKTA Procore Account with MFA options setup
-* Go to OKTA homepage
-```
-   https://procore.okta.com/app/UserHome
-```
-* Click on Username Drop Down -> Settings
-* Click on Edit button -> Extra Verification
-* Add MFA options
-  - Currently Yubi Keys (U2F)is supported if your Docker setup **has access to Host USB devices only**
-
 ### Installing
 
 Installation requires setting up PATH environment variables and creating a SRE Tooling binary location
@@ -51,13 +40,11 @@ source <(curl -s https://raw.githubusercontent.com/HuskyProcore/sre-tooling-tfcl
 ```
 
 Verify the newly created variables exist and are filled in correctly.
-
-
-#### Testing Installation
-Verify the environment Variables
 ```
 printenv
 ```
+
+#### Testing Installation
 
 Type the following command to launch an tfcli container
 ```
@@ -72,7 +59,12 @@ The container can be started using the `tf` shell script which will do the follo
 
 * Sets the container to be removed after execution with `--rm` docker run option
 * Sets the container **_name_** to be `pc-tfcli`
+* Sets the container **_hostname_** to be `terraform`
+* Sets the `terraform` command to **terraform 12 binary**
 
+Other terraform binaries are also available under `/opt/tfcli/bin` and can be used by
+   - `tf<major version>` example `tf11`
+   
 
 Type the following command to launch an tfcli container
 ```
