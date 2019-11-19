@@ -10,7 +10,8 @@ RUN apt-get update && \
     echo 'y' | apt-get install wget && \
     echo 'y' | apt-get install unzip && \
     echo 'y' | apt-get install jq && \
-    echo 'y' | apt install ruby
+    echo 'y' | apt install ruby && \
+    gem install terraform_landscape
 
 # Configuration Variables
 ENV TFCLI_INSTALL /opt/tfcli/tfcli-bundle/install
@@ -45,10 +46,6 @@ RUN rm ${TFCLI_HOME}/.wget-hsts
 RUN chmod +x "${TFCLI_HOME}"/bin/*
 ENV PATH="${TFCLI_HOME}/bin:${PATH}"
 RUN echo 'alias terraform="tf12"' > ~/.bashrc
-
-# Install Landscape
-USER root
-RUN gem install terraform_landscape
 
 WORKDIR /opt/tfcli
 VOLUME ["/opt/tfcli/mount"]

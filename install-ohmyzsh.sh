@@ -6,6 +6,7 @@ docker pull quay.io/huskyprocore/sre-tooling-tfcli
 # Create a docker directory for use by attached volumes used by containers
 cd ~
 mkdir -p docker/pc-tfcli/volumes
+curl -o docker/pc-tfcli/tf.sh https://raw.githubusercontent.com/HuskyProcore/sre-tooling-tfcli/master/pc-tfcli/tf.sh
 cd docker
 
 # Add the newly created directory to your environment variables
