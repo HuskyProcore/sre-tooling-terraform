@@ -11,7 +11,9 @@ RUN apt-get update && \
     echo 'y' | apt-get install unzip && \
     echo 'y' | apt-get install jq && \
     echo 'y' | apt install ruby && \
-    gem install terraform_landscape
+    gem install terraform_landscape && \
+    echo 'y' | apt install git && \
+    echo 'y' | apt install openssh
 
 # Configuration Variables
 ENV TFCLI_INSTALL /opt/tfcli/tfcli-bundle/install
